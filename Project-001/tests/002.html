@@ -1,0 +1,67 @@
+<form action="#" method="post" enctype="multipart/form-data">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <input
+          type="text"
+          name="name"
+          class="form-control"
+          placeholder="Your Name"
+          value=""
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="email"
+          name="email"
+          class="form-control"
+          placeholder="Your Email *"
+          value=""
+          required=""
+        />
+      </div>
+      <div class="form-group">
+        <select
+          name="organisation"
+          class="form-control"
+          id="getFname"
+          onchange="admSelectCheck(this);"
+        >
+          <option>--Select Organisation--</option>
+          <option id="admOption" value="0">Others</option>
+          <option value="test1">test1</option>
+          <option value="test2">test2</option>
+        </select>
+      </div>
+      <div class="form-group" id="admDivCheck"></div>
+      <div class="form-group text-center">
+        <input
+          type="submit"
+          name="btnSubmit"
+          class="btnContact"
+          value="Send Message"
+        />
+      </div>
+    </div>
+  </div>
+</form>
+<script>
+  function admSelectCheck(nameSelect) {
+    if (nameSelect) {
+      admOptionValue = document.getElementById("admOption").value;
+      if (nameSelect.value == admOptionValue) {
+        document.getElementById("admDivCheck").textContent = "";
+        document
+          .getElementById("admDivCheck")
+          .insertAdjacentHTML(
+            "afterbegin",
+            "<input type='text' name='organisation' class='form-control' placeholder='Organisation Name' />"
+          );
+      } else {
+        document.getElementById("admDivCheck").textContent = "";
+      }
+    } else {
+      document.getElementById("admDivCheck").textContent = "";
+    }
+  }
+</script>

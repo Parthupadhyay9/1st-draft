@@ -1,0 +1,539 @@
+<html>
+
+<head>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
+		id="bootstrap-css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="path/to/font-awesome/css/font-awesome.min.css"
+    />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
+    ></script>
+
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="fonts/iconic/css/material-design-iconic-font.min.css"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<style>
+	.searchInput {
+		width: 50%;
+		display: flex;
+		align-items: center;
+		position: relative;
+		justify-content: flex-end;
+		margin: 20px 0px;
+		padding: 0px 4px;
+	}
+
+	.searchInput input {
+		border: 1px solid #e5e5e5;
+		border-radius: 50px;
+		margin-left: 8px;
+		height: 34px;
+		width: 100%;
+		padding: 0px 25px 0px 10px;
+		transition: all 0.6s ease;
+	}
+
+	.searchInput label {
+		color: #767676;
+		font-weight: normal;
+	}
+
+	.searchInput input:placeholder-shown {
+		width: 13%;
+	}
+
+	.searchInput:hover input:placeholder-shown {
+		width: 100%;
+		cursor: pointer;
+	}
+
+	.searchInput:after {
+		font-family: "FontAwesome";
+		color: #d4d4d4;
+		position: relative;
+		content: "\f002";
+		right: 25px;
+	}
+
+	.bg-mynav {
+		background-color: #2c3e50;
+	}
+
+	body {
+		font-size: 1.25rem;
+		background-color: #f6f8fa;
+	}
+
+	td {
+		line-height: 3rem;
+	}
+</style>
+	  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+<body>
+	{% block body %}
+
+	<!-- <form class="form-inline" action="/login">
+		<a href="/user">
+			<h3 class="mx-auto text-secondary  text-center">IP MANAGER</h3>
+		</a>
+		<div class="col justify-content-end form-inline">
+			<h5 class=' text-secondary mr-3'>Hey, {{session.name}}!</h5> <a href="{{ url_for('logout') }}"> <input
+					type="submit" method="post" class=" mr-1 btn btn-primary form-inline flex text-center"
+					value="Logout"></input></a>
+		</div>
+		<hr>
+		</div>
+		
+	</form> -->
+	<nav class="navbar navbar-dark bg-mynav">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">My App</a>
+        </div>
+    </nav>
+	<div class="container">
+        <div class=" ">
+ 
+            <div class="col-sm-8 add_flex">
+                <div class="form-group searchInput">
+                    <label for="email">Search:</label>
+                    <input type="search" id="gfg" class="form-control" placeholder="Search" />
+
+                </div>
+            </div>
+      
+        </div>
+
+	<form class="form-inline text-secondary " action="/add">
+		<h2 class="">DASHBOARD</h2>
+		<!-- <input id="gfg" type="text" class="form-control" placeholder="Search here"> -->
+
+		</div>
+		<div class="col d-flex justify-content-end form-inline">
+			<input type="submit" method="post" class="btn  btn-secondary form-inline flex text-center"
+				value="Create"></input>
+		</div>
+		<hr>
+		</div>
+	</form>
+	<div class="form-group">
+		<table id="myTable" class="table table-striped table-bordered" style="width:100%">
+			<thead>
+				<tr>
+					<td class='ids'>Region</td>
+					<td class='location'>Branch</td>
+					<td class='location'>Device</td>
+					<td>Wan</td>
+					<td>Lan</td>
+					<td class='add'>Additional</td>
+					<td class='action'>Action</td>
+				</tr>
+			</thead>
+			<tbody id="geeks">
+
+				{% for row in branch %}
+				<tr>
+					<td>{{row.1}}</td>
+					<td>{{row.2}}</td>
+					<td>{{row.3}}</td>
+					<td>{{row.3}}</td>
+					<td>{{row.4}}</td>
+					<td>{{row.5}}</td>
+					<td>
+
+
+						<a href="/update/{{row.0}}" class="btn  btn-sm btn-secondary" data-toggle="modal"
+							data-target="#modalview{{row.0}}">View</a>
+						<a href="/edit/{{row.0}}" class="btn btn-warning btn-sm" data-toggle="modal"
+							data-target="#modaledit{{row.0}}">Edit</a>
+						<!-- Edit Starts -->
+						<div id="modaledit{{row.0}}" class="modal fade" role="dialog">
+							<div class="modal-dialog">
+								<div class="modal-content">
+
+									<div class="modal-header">
+										<h5 class="modal-title text-primary" style="align-content: center;">Edit
+										</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+
+
+									<div class="modal-body">
+
+										<form action="{{ url_for('edit')}}" method="POST">
+											<input type="hidden" name="id" value="{{row.0}}">
+											<div class="form-group">
+												<label>Region</label>
+												<input value="{{row.1}}" type="text" name="region" class="form-control"
+													id="exampleFormControlInput1" placeholder="Region">
+											</div>
+
+											<div class="form-group">
+												<input value="{{row.2}}" type="text" name="branch" class="form-control"
+													id="exampleFormControlInput1" placeholder="branch">
+											</div>
+
+											<div class="form-group">
+												<input value="{{row.3}}" name="device" type="text" class="form-control"
+													id="exampleFormControlInput1" placeholder="device">
+											</div>
+											<div class="form-group">
+												<input value="{{row.4}}" name="type" type="text" class="form-control"
+													id="exampleFormControlInput1" placeholder="Type">
+											</div>
+											<script>
+												function toggleField(hideObj, showObj) {
+													hideObj.disabled = true;
+													hideObj.style.display = "none";
+													showObj.disabled = false;
+													showObj.style.display = "inline";
+													showObj.focus();
+												}
+											</script>
+											<select name="device-model" onchange="if(this.options[this.selectedIndex].id=='customOption'){
+												toggleField(this,this.nextSibling);
+												this.selectedIndex='0';
+											}" required>
+												<option value="{{row.5}}" hidden>{{row.5}}</option>
+												<option value="Cisco">Cisco</option>
+												<option value="Fortigate">Fortigate</option>
+												<option value="Aruba">Aruba</option>
+												<option id="customOption">Other</option>
+												<input name="device-model" style="display: none" disabled="disabled"
+													onblur="if(this.value==''){toggleField(this,this.previousSibling);}" />
+											</select>
+
+											<h4>Wan:</h4>
+											<input type="text" value={{row.6}} placeholder="IP" name="wan1" required />
+											<input type="text" value={{row.8}} placeholder="ISP Name" name="isp1"
+												required />
+											<input type="text" value={{row.10}} placeholder="Link Type" name="link1"
+												required />
+											<input type="text" value={{row.12}} placeholder="Circuit ID" name="circuit1"
+												required />
+											<h4>Wan2:</h4>
+											<input type="text" value={{row.7}} placeholder="IP" name="wan2" required />
+											<input type="text" value={{row.9}} placeholder="ISP Name" name="isp2"
+												required />
+											<input type="text" value={{row.11}} placeholder="Link Type" name="link2"
+												required />
+											<input type="text" value={{row.13}} placeholder="Circuit ID" name="circuit2"
+												required />
+											<h4>Additional Wan Links:</h4>
+											<select name="additional" id="dropdown"
+												onchange="CheckAdditionals(this.value);" required>
+												<option value="{{row.18}}" hidden>{{row.18}}</option>
+												<option value="ILL">ILL</option>
+												<option value="BB">BB</option>
+												<option value="GSM">GSM</option>
+											</select>
+											<input type="text" value="{{row.19}}" placeholder="ISP Name" name="isp3"
+												required />
+											<input type="text" value="{{row.20}}" placeholder="Links" name="link3"
+												required />
+											<input type="text" value="{{row.21}}" placeholder="Circuit ID"
+												name="circuit3" required />
+											<h4>Lan:</h4>
+											{%if row.16 !="" and row.17!="" %}
+											<input type="text" value="{{row.14}}" placeholder="IP" name="lan1"
+												required />
+											<input type="text" value="{{row.15}}" placeholder="Subnet" name="subnet1"
+												required />
+											<input type="text" value="{{row.16}}" name="lan2" id="ip"
+												placeholder="IP" />
+											<input type="text" value="{{row.17}}" name="subnet2" id="subnet"
+												placeholder="Subnet" />
+											{%else%}
+											<input type="text" value="{{row.14}}" placeholder="IP" name="lan1"
+												required />
+											<input type="text" value="{{row.15}}" placeholder="Subnet" name="subnet1"
+												required />
+											<input type="text" value="{{row.16}}" name="lan2" id="ip" placeholder="IP"
+												style="visibility:hidden" />
+											<input type="text" value="{{row.17}}" name="subnet2" id="subnet"
+												placeholder="Subnet2" style="visibility:hidden" />
+											{%endif%}
+											<button type="submit" class="btn btn-success mb-2">Update</button>
+
+										</form>
+
+
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Edit Ends -->
+						<a href="/delete/{{ row.0 }}" onclick="return confirm('Are Sure Want To Deleted ?')"
+							class="btn btn-danger btn-sm">Delete</a>
+					</td>
+
+
+				</tr>
+
+				<!-- View Starts -->
+
+				<div id="modalview{{row.0}}" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title text-primary" style="align-content: center">
+									View Details: {{row.1}}
+								</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+
+							<div class="modal-body">
+								<form action="{{ url_for('update')}}" method="POST">
+									<div class="form-group">
+
+										<p>Branch: {{row.2}}</p>
+										<p>Device : {{row.3}}</p>
+										<p>Type: {{row.4}}</p>
+										<p>Device Model: {{row.5}}</p>
+										<h4>Wan Details</h4>
+										<p>Wan1: {{row.6}}</p>
+										<p>Isp: {{row.8}}</p>
+										<p>Link: {{row.10}}</p>
+										<p>Circuit: {{row.12}}</p>
+										<p>Wan2: {{row.7}}</p>
+										<p>Isp: {{row.9}}</p>
+										<p>Link: {{row.11}}</p>
+										<p>Circuit: {{row.13}}</p>
+										<h4>Additional Wan Details</h4>
+										<p>Additional Wan: {{row.18}}</p>
+										<p>Isp: {{row.19}}</p>
+										<p>Link: {{row.20}}</p>
+										<p>Circuit: {{row.21}}</p>
+										<h4>Lan Details</h4>
+										<p>Lan1: {{row.14}}</p>
+										<p>Subnet1: {{row.15}}</p>
+										{%if row.16=="" and row.17=="" %} {%else%}
+										<p>Lan2: {{row.16}}</p>
+										<p>Subnet2: {{row.17}}</p>
+										{%endif%}
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- View Ends -->
+
+				{% endfor %}
+
+			</tbody>
+		</table>
+	</div>
+
+
+	{% endblock %}
+
+	<style>
+		@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css";
+
+		body {
+			background: #F3F3F3;
+		}
+
+		.location {
+			width: 20%;
+		}
+
+		.ids {
+			width: 10%;
+		}
+
+		.add {
+			width: 17%;
+		}
+
+		.action {
+			width: 12%;
+		}
+
+		.center {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		.open {
+			align-items: center;
+			width: 56px;
+			align-content: center;
+			border-radius: 4px;
+		}
+
+		.delete {
+			width: 60px;
+			border-radius: 4px;
+			right: 20px;
+		}
+
+		.popup {
+			width: 350px;
+			padding: 30px 20px;
+			background: #F9F9F9;
+			border-radius: 10px;
+			box-sizing: border-box;
+			z-index: 2;
+			text-align: center;
+			opacity: 0;
+			top: -200%;
+			transform: translate(-50%, -50%) scale(0.5);
+			transition: opacity 300ms ease-in-out, top 1000ms ease-in-out,
+				transform 1000ms ease-in-out;
+		}
+
+		.popup.active {
+			opacity: 1;
+			top: 50%;
+			transform: translate(-50%, -50%) scale(1);
+			transition: transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
+		}
+
+		.popup .icon {
+			margin: 5px 0px;
+			width: 50px;
+			height: 50px;
+			border: 2px solid #34f234;
+			text-align: center;
+			display: inline-block;
+			border-radius: 50%;
+			line-height: 60px;
+		}
+
+		.popup .icon i.fa {
+			font-size: 30px;
+			color: #34f234;
+		}
+
+		.popup .title {
+			margin: 5px 0px;
+			font-size: 30px;
+			font-weight: 600;
+		}
+
+		.popup .description {
+			color: #222;
+			font-size: 15px;
+			padding: 5px;
+		}
+
+		.popup .dismiss-btn {
+			margin-top: 15px;
+		}
+
+		.popup .dismiss-btn button {
+			padding: 10px 20px;
+			background: #111;
+			color: #f5f5f5;
+			border: 2px solid #111;
+			font-size: 16px;
+			font-weight: 600;
+			outline: none;
+			border-radius: 10px;
+			cursor: pointer;
+			transition: all 300ms ease-in-out;
+		}
+
+		.popup .dismiss-btn button:hover {
+			color: #111;
+			background: #f5f5f5;
+		}
+
+		.popup>div {
+			position: relative;
+			top: 10px;
+			opacity: 0;
+		}
+
+		.popup.active>div {
+			top: 0px;
+			opacity: 1;
+		}
+
+		.popup.active .icon {
+			transition: all 300ms ease-in-out 250ms;
+		}
+
+		.popup.active .title {
+			transition: all 300ms ease-in-out 300ms;
+		}
+
+		.popup.active .description {
+			transition: all 300ms ease-in-out 350ms;
+		}
+
+		.popup.active .dismiss-btn {
+			transition: all 300ms ease-in-out 400ms;
+		}
+	</style>
+
+	<script type="text/javascript">
+		function CheckColors(val) {
+			var element = document.getElementById("color");
+			if (val == "pick a color" || val == "other") {
+				element.style.display = "block";
+				element.setAttribute('required', '');
+			}
+			else { element.style.display = "none"; }
+		}
+		// function sFunction() {
+		// 	if ("hidden" == document.getElementById("s").style.visibility) {
+		// 		document.getElementById("s").style.visibility = "visible";
+		// 		document.getElementById("small").value = "-";
+		// 	} else {
+		// 		document.getElementById("s").style.visibility = "hidden";
+		// 		document.getElementById("small").value = "+";
+		// 		document.getElementById("lan2").value = null;
+		// 		document.getElementById("subnet2").value = null;
+		// 	}
+		// }
+
+	</script>
+
+	<script>
+		$(document).ready(function () {
+			$("#gfg").on("keyup", function () {
+				var value = $(this).val().toLowerCase();
+				$("#geeks tr").filter(function () {
+					$(this).toggle($(this).text()
+						.toLowerCase().indexOf(value) > -1)
+				});
+			});
+		});
+	</script>
+
+	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,394 @@
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
+	id="bootstrap-css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+
+  <div class="popup" id="popup-1">
+  <link rel="stylesheet" href="styles.css">
+  <div class="overlay"></div>
+  <div class="content">
+    <div class="close-btn" onclick="togglePopup()">×</div>
+    <h1>Add Branch</h1>
+    <hr />
+    <h2>Branch Details</h2>
+    <div>
+      <input class="branch" name="branch" placeholder="Branch Location" />
+      <input class='level' value='Branch Level' type='submit' for="cars"></label>
+
+      <select name="level" name="level" class='select' id="level">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+
+      <hr />
+
+      <h2>Spoc Details</h2>
+      <input class="spoc" placeholder=" Spoc Name" />
+      <input class="spoc1" placeholder=" Spoc Telephone" />
+      <button type='submit' class='btn'>+</button>
+      <hr />
+      <h2>Device Details</h2>
+	<input class="device" maxlength="25"  name="make" placeholder="Make" />
+	<input class="device" maxlength="25" name="modal" placeholder="Modal" />
+	<input class="device" maxlength="25" name="serial" placeholder="Serial Number" />
+	<input class="device" maxlength="25" name="ware" placeholder="Firmware" />
+	<input class="device" maxlength="25" name="host" placeholder="Host Name" />
+      		<input type="submit" id="others" class="additional" disabled="disabled" value="Device Type" />
+					<select name="type" onchange="EnableDisableTextBox(this)" class="options" id="test">
+						<option value="Router">Router</option>
+						<option value="Firewall">Firewall</option>
+						<option value="other">Other</option>
+					</select>
+      <button type='submit'  id="addrow" class='btn'>+</button>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+      <table id="applicanttable">
+        <thead>
+          <tr>
+          </tr>
+        </thead>
+        <tbody>
+          <tr id="row_0">
+            <td>
+              <input id="firstName0" class='wan' name="wanip0" type="text" />
+            </td>
+            <td>
+              <input id="lastName0" class='wan1' name="id0" type="text" value="" />
+            </td>
+            <td>
+              <input type="button" class="removerow" id="removerow0" name="removerow0" value="-" />
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+
+          </tr>
+        </tfoot>
+      </table>
+      <hr />
+      <br>
+      <button type='submit' class="button" value='submit'>Submit</button>
+
+    </div>
+  </div>
+</div>
+
+<button class='open' onclick="togglePopup()">+</button>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script>
+    var rowIndex = 0;
+
+$("#addrow").on("click", function () {
+  rowIndex++;
+
+  var newRow =
+    '<tr><td><input class="wan" id="firstName' +
+    rowIndex +
+    '" name="wanip' +
+    rowIndex +
+    '" type="text" /></td>"' +
+    '<td><input class="wan1" id="lastName' +
+    rowIndex +
+    '" name="id' +
+    rowIndex +
+    '" type="text" /></td>"' +
+    '<td><input type="button" class="removerow" id="removerow' +
+    rowIndex +
+    '" name="removerow' +
+    rowIndex +
+    '" value="-"/></td></tr>';
+
+  if ($("#applicanttable > tbody > tr").is("*"))
+    $("#applicanttable > tbody > tr:last").after(newRow);
+  else $("#applicanttable > tbody").append(newRow);
+});
+
+$(document).on("click", "[class^=removerow]", function () {
+  $(this).parents("tr").remove();
+});
+
+  function togglePopup() {
+    document.getElementById("popup-1").classList.toggle("active");
+  }
+  document.querySelector('#ip').addEventListener('keydown', (e) => {
+    e.target.value = e.target.value.replace(/(\d{3})(\d+)/g, '$1.$2')
+  })
+    /* Jquery */
+    ('#ip').keyup(function () {
+      $(this).val($(this).val().replace(/(\d{3})(\d+)/g, '$1.$2'))
+    });
+
+  const button = document.getElementById("button");
+  button.forEach((btn) => {
+    btn.addEventListener("click", function (e) {
+      let x = e.clientX - e.target.offsetLeft;
+      let y = e.clientY - e.target.offsetTop;
+
+      let ripples = document.createElement("span");
+      ripples.style.left = x + "px";
+      ripples.style.top = y + "px";
+      this.appendChild(ripples);
+      setTimeout(() => {
+        ripples.remove();
+      }, 1000);
+    });
+  });
+</script>
+<style>
+
+*{
+font-size: 14px;
+}
+  .btn {
+    border-radius: 99px;
+    outline: none;
+    border: none;
+    background-color: #fff;
+    height: 50;
+    border-radius: 99px;
+    outline: none;
+    border: none;
+    background-color: #F3F3F3;
+    /* height: 50; */
+    /* background: red; */
+    height: 25;
+    width: 25;
+  }
+.device{
+   width: 183px;
+    outline: none;
+    border: 1px solid gray;
+    height: 30;
+    border-radius: 4px;
+}
+  span {
+    position: absolute;
+    background: #fff;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    border-radius: 50%;
+    animation: animate 1s linear infinite;
+  }
+
+  @keyframes animate {
+    0% {
+      width: 0px;
+      height: 0px;
+      opacity: 0.7;
+    }
+
+    100% {
+      width: 500px;
+      height: 500px;
+      opacity: 0.4;
+    }
+  }
+
+  .level {
+    outline: none;
+    height: 40;
+    width: 10px;
+    width: 90;
+    border-radius: 5px;
+    border:none;
+    background-color:gray;
+    color:white;
+  }
+
+  .branch {
+    border-radius: 4px;
+    border: 1px solid gray;
+    outline: none;
+    height: 30;
+    width: 60%;
+    margin-right: 250px;
+  }
+
+  .spoc {
+    width: 400px;
+    outline: none;
+    border: 1px solid gray;
+    height: 30;
+    border-radius: 4px;
+    margin-right: 80px;
+    justify-content: space-between;
+  }
+
+  .spoc1 {
+    width: 400px;
+    outline: none;
+    border: 1px solid gray;
+    height: 30;
+    border-radius: 4px;
+    margin-left: 46px;
+
+  }
+
+  .select {
+    height: 30;
+    border-radius: 4px;
+    outline: none;
+    border: 1px solid gray;
+  }
+
+  .wan {
+    width: 220;
+    border-radius: 4px;
+    outline: none;
+    border: 1px solid gray;
+    height: 30;
+  }
+
+  .wan1 {
+    width: 230;
+    border-radius: 4px;
+    outline: none;
+    border: 1px solid gray;
+    height: 30;
+  }
+
+  .wan2 {
+    width: 230;
+    border-radius: 4px;
+    outline: none;
+    border: 1px solid gray;
+    height: 30;
+  }
+
+  .wan3 {
+    width: 230;
+    border-radius: 4px;
+    outline: none;
+    border: 1px solid gray;
+    height: 30;
+  }
+
+  button:hover {
+    cursor: pointer;
+    color: #222222;
+  }
+
+  .popup .overlay {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    display: none;
+  }
+
+  .raise:hover,
+  .raise:focus {
+    box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+    transform: translateY(-0.25em);
+  }
+
+  .popup .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: #fff;
+    width: 1000px;
+    max-width: 1000px;
+    height: auto;
+    z-index: 2;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+  }
+
+  .popup .close-btn {
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 30px;
+    height: 30px;
+    color: #000;
+    font-size: 25px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%;
+  }
+
+  .popup.active .overlay {
+    display: block;
+  }
+
+  .popup.active .content {
+    transition: all 300ms ease-in-out;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .button {
+    width: 100px;
+    height: 35px;
+    font-family: "Roboto", sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 500;
+    color: #000;
+    background-color: #f3f3f3;
+    border: none;
+    border-radius: 45px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .button:hover {
+    background-color: #2ee59d;
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    color: #fff;
+    transform: translateY(-7px);
+  }
+
+  .open {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 15px;
+    font-size: 18px;
+    border: 2px solid #222;
+    color: #222;
+    text-transform: uppercase;
+    font-weight: 600;
+    background: #fff;
+  }
+
+  /*responsive*/
+  @media(max-width: 767px) {
+    .popup .content {
+      width: calc(100% - 30px);
+    }
+
+    .popup .content {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+
+  @media(max-height: 767px) {
+    .popup .content {
+      height: calc(100% - 30px);
+    }
+
+    .popup .content {
+      flex: 0 0 100%;
+      max-height: 100%;
+    }
+  }
+</style>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Branch</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
+    id="bootstrap-css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css" />
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <body>
+    <nav class="navbar navbar-dark bg-mynav">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/user">
+          <h4>IP Manager</h4>
+        </a>
+        <div class="col justify-content-end form-inline">
+          <h5 class=' navbar-brand'>Hey, {{session.name}}!</h5> <a href="{{ url_for('logout') }}"> <input type="submit"
+              method="post" class=" mr-1 btn btn-primary form-inline flex text-center" value="Logout"></input></a>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div style="display:grid; justify-content: center;align-items: center;">
+        <h1>Details Required</h1>
+
+      </div>
+      <br>
+      <form action="{{ url_for('add') }}" method="post">
+        <input type="text" placeholder="Region" class="inp" name="region" required />
+        <input type="text" placeholder="Branch" class="inp" name="branch" required />
+        <select name="device" class="inp" name="device" id="device" required>
+          <option value="" hidden>Device</option>
+
+          <option value="switch">Switch</option>
+          <option value="firewall">Firewall</option>
+          <option value="router">Router</option>
+        </select>
+
+        <script>
+          function toggleField(hideObj, showObj) {
+            hideObj.disabled = true;
+            hideObj.style.display = "none";
+            showObj.disabled = false;
+            showObj.style.display = "inline";
+            showObj.focus();
+          }
+        </script>
+        <select name="device-model" class="inp" onchange="if(this.options[this.selectedIndex].id=='customOption'){
+      toggleField(this,this.nextSibling);
+      this.selectedIndex='0';
+  }" required>
+          <option value="" hidden>Device Model</option>
+          <option value="Cisco">Cisco</option>
+          <option value="Fortigate">Fortigate</option>
+          <option value="Aruba">Aruba</option>
+          <option id="customOption">Other</option>
+          <input name="device-model" style="display: none" class="inp" disabled="disabled"
+            onblur="if(this.value==''){toggleField(this,this.previousSibling);}" />
+        </select>
+        <input type="text" class="inp" name="type" placeholder="Type" />
+        <div class="manage">
+          Managed
+          <!-- <input type="hidden" name="managed" value="off" /> -->
+          <input type="checkbox" name="managed" value="managed" />
+        </div>
+        <br><br>
+        <div style="display:grid; justify-content: center;align-items: center;">
+          <h1>Wan</h1>
+
+        </div>
+        <input type="text" class="inp" placeholder="IP" name="wan1" required />
+        <input type="text" class="inp" placeholder="ISP Name" name="isp1" required />
+        <input type="text" class="inp" placeholder="Link Type" name="link1" required />
+        <input type="text" class="inp" placeholder="Circuit ID" name="circuit1" required />
+        <br><br>
+        <div style="display:grid; justify-content: center;align-items: center;">
+          <h1>Wan2</h1>
+
+        </div>
+        <input type="text" class="inp" placeholder="IP" name="wan2" required />
+        <input type="text" class="inp" placeholder="ISP Name" name="isp2" required />
+        <input type="text" class="inp" placeholder="Link Type" name="link2" required />
+        <input type="text" class="inp" placeholder="Circuit ID" name="circuit2" required />
+        <br><br>
+        <div style="display:grid; justify-content: center;align-items: center;">
+          <h1>Additional Wan Links</h1>
+
+        </div>
+        <select name="additional" class="inp" id="dropdown" onchange="CheckAdditionals(this.value);" required>
+          <option value="" hidden>Additional Wan Links:</option>
+          <option value="ILL">ILL</option>
+          <option value="BB">BB</option>
+          <option value="GSM">GSM</option>
+        </select>
+        <input type="text" class="inp" placeholder="ISP Name" name="isp3" required />
+        <input type="text" class="inp" placeholder="Links" name="link3" required />
+        <input type="text" class="inp" placeholder="Circuit ID" name="circuit3" required />
+        <br><br>
+        <div style="display:grid; justify-content: center;align-items: center;">
+          <h1>Lan</h1>
+
+        </div>
+        <div>
+          <input type="text" class="inp" placeholder="IP" name="lan1" required />
+          <input type="text" class="inp" placeholder="Subnet" name="subnet1" required />
+          <a id="small" value="+" onclick="sFunction()">+</a>
+
+          <p id="s" style="visibility: hidden;padding-top:5px;display:list-items">
+            <input type="text" class="inp" name="lan2" id="ip" placeholder="IP" />
+            <input type="text" class="inp" name="subnet2" id="subnet" placeholder="Subnet" />
+          </p>
+        </div>
+        <div style="display: grid;
+align-items: center;
+justify-content: center;">
+          <input style="background-color: #465679;color:white;" type="submit" value="Submit!" />
+
+        </div>
+      </form>
+    </div>
+    <style>
+      /*
+Basic input element using psuedo classes
+*/
+      .navbar {
+        background: #303b53;
+      }
+
+      html {
+        font-family: 'Roboto', sans-serif;
+        width: 100%;
+      }
+
+      .container {
+
+        width: 100%;
+
+        margin-right: auto;
+        margin-left: auto;
+        justify-content: center;
+        display: grid;
+        align-items: center;
+        padding-top: 20px;
+      }
+
+      body {
+        margin: auto 0 auto;
+        width: 90%;
+        justify-content: center;
+        align-items: center;
+        display: inline
+      }
+
+      h1 {
+        font-size: 28px;
+        margin-bottom: 2.5%;
+      }
+
+      @-webkit-keyframes appear {
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes appear {
+        100% {
+          opacity: 1;
+        }
+      }
+
+      .inp {
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+      }
+
+      .inp:focus {
+        outline: none;
+      }
+      .manage{
+        display:inline;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+      }
+    </style>
+    <script type="text/javascript">
+
+      function sFunction() {
+        if ("hidden" == document.getElementById("s").style.visibility) {
+          document.getElementById("s").style.visibility = "visible";
+          document.getElementById("small").value = "-";
+        } else {
+          document.getElementById("s").style.visibility = "hidden";
+          document.getElementById("small").value = "+";
+          document.getElementById("lan2").value = null;
+          document.getElementById("subnet2").value = null;
+        }
+      }
+    </script>
+    </div>
+  </body>
+</body>
+
+</html>
